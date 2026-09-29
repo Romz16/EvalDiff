@@ -1,0 +1,46 @@
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[project]
+name = "evaldiff"
+version = "0.1.0"
+description = "Behavioral regression testing and CI/CD for AI systems"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "EvalDiff contributors" }]
+keywords = ["llm", "evaluation", "regression-testing", "rag", "agents", "ci"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+]
+dependencies = ["PyYAML>=6.0"]
+
+[project.scripts]
+evaldiff = "evaldiff.cli:main"
+
+[project.entry-points."evaldiff.adapters"]
+callable = "evaldiff.adapters:PythonCallableAdapter"
+http = "evaldiff.adapters:HTTPAdapter"
+
+[project.entry-points."evaldiff.evaluators"]
+requirements = "evaldiff.evaluators:RequirementEvaluator"
+contract = "evaldiff.evaluators:ContractEvaluator"
+
+[project.entry-points."evaldiff.reporters"]
+terminal = "evaldiff.reporters:TerminalReporter"
+json = "evaldiff.reporters:JSONReporter"
+html = "evaldiff.reporters:HTMLReporter"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/evaldiff"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = "-q"
+

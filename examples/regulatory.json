@@ -1,0 +1,54 @@
+{
+  "project": "regulatory-agent",
+  "suite": "production-regression",
+  "repetitions": 2,
+  "system": {
+    "adapter": "callable",
+    "target": "regulatory_system:summarize",
+    "name": "demo-v1"
+  },
+  "policy": {
+    "fail_on_critical_loss": true,
+    "fail_on_unmet_critical": true,
+    "min_critical_pass_rate": 1.0,
+    "max_coverage_drop": 0.0,
+    "max_format_failures": 0,
+    "max_forbidden_content_matches": 0,
+    "min_coverage": 0.8
+  },
+  "cases": [
+    {
+      "id": "notice-001",
+      "input": {"text": "The filing contains inconsistent totals."},
+      "requirements": [
+        {
+          "id": "deadline",
+          "description": "Mention the 30-day deadline",
+          "weight": 3,
+          "critical": true,
+          "evaluator": "contains",
+          "value": "30 days"
+        },
+        {
+          "id": "corrective_action",
+          "description": "Explain that a corrected filing is required",
+          "weight": 2,
+          "evaluator": "contains",
+          "value": "corrected filing"
+        }
+      ],
+      "contract": {
+        "schema": {
+          "type": "object",
+          "required": ["summary", "deadline_days", "action"],
+          "additionalProperties": false,
+          "properties": {
+            "summary": {"type": "string", "minLength": 20},
+            "deadline_days": {"type": "integer", "enum": [30]},
+            "action": {"type": "string"}
+          }
+        }
+      }
+    }
+  ]
+}

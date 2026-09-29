@@ -1,0 +1,23 @@
+name: EvalDiff
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  behavioral-regression:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -e .
+      - name: Run AI regression suite
+        run: evaldiff run examples/regulatory.json --ci
+      - name: Upload EvalDiff reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: evaldiff-report
+          path: .evaldiff/reports/

@@ -1,0 +1,49 @@
+.evaldiff/
+.artifacts/
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.coverage
+htmlcov/
+build/
+dist/
+
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+secrets/
+credentials/
+secrets*.json
+credentials*.json
+*.secret
+*.pem
+*.key
+*.p12
+*.pfx
+.ssh/
+.aws/
+config.local.*
+
+# Databases, logs, and local artifacts
+*.db
+*.sqlite
+*.sqlite3
+*.log
+logs/
+reports/
+test-results/
+coverage.xml
+junit.xml
+
+# Local tests
+tests/
+test_*.py
+*_test.py
+
+# Private internal reports and legacy documentation
+docs/RELATORIO_CORRECOES_SEGURANCA.md
+docs/RELATORIO_VALIDACAO_5_CASOS.md
+docs/MANUAL_DE_TESTES.md
